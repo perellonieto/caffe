@@ -14,13 +14,13 @@ import pydot
 
 # Internal layer and blob styles.
 LAYER_STYLE_DEFAULT = {'shape': 'record',
-                       'fillcolor': '#6495ED',
+                       'fillcolor': 'gold',
                        'style': 'filled'}
 NEURON_LAYER_STYLE = {'shape': 'record',
-                      'fillcolor': '#90EE90',
+                      'fillcolor': 'darkolivegreen2',
                       'style': 'filled'}
 BLOB_STYLE = {'shape': 'octagon',
-              'fillcolor': '#E0E0E0',
+              'fillcolor': 'lightgray',
               'style': 'filled'}
 
 
@@ -120,13 +120,13 @@ def get_layer_label(layer, rankdir, shrink=True):
 def choose_color_by_layertype(layertype):
     """Define colors for nodes based on the layer type.
     """
-    color = '#6495ED'  # Default
+    color = 'cornflowerblue'  # Default
     if layertype == 'Convolution' or layertype == 'Deconvolution':
-        color = '#FF5050'
+        color = 'lightblue'
     elif layertype == 'Pooling':
-        color = '#FF9900'
+        color = 'orange'
     elif layertype == 'InnerProduct':
-        color = '#CC33FF'
+        color = 'salmon'
     return color
 
 
