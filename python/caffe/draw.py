@@ -120,7 +120,7 @@ def get_layer_label(layer, rankdir, shrink=True):
 def choose_color_by_layertype(layertype):
     """Define colors for nodes based on the layer type.
     """
-    color = 'cornflowerblue'  # Default
+    color = 'khaki'  # Default
     if layertype == 'Convolution' or layertype == 'Deconvolution':
         color = 'lightblue'
     elif layertype == 'Pooling':
