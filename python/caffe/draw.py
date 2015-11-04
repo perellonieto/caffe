@@ -50,7 +50,7 @@ def get_edge_label(layer):
     return edge_label
 
 
-def get_layer_label(layer, rankdir):
+def get_layer_label(layer, rankdir, shrink=True):
     """Define node label based on layer type.
 
     Parameters
@@ -65,6 +65,12 @@ def get_layer_label(layer, rankdir):
         A label for the current layer
     """
 
+    if shrink:
+        node_text = {'kernel':'k', 'stride':'s', 'pad':'p'}
+    else:
+        node_text = {'kernel':'kernel size', 'stride':'stride',
+                     'pad':'padding'}
+
     if rankdir in ('TB', 'BT'):
         # If graph orientation is vertical, horizontal space is free and
         # vertical space is not; separate words with spaces
@@ -77,28 +83,34 @@ def get_layer_label(layer, rankdir):
     if layer.type == 'Convolution' or layer.type == 'Deconvolution':
         # Outer double quotes needed or else colon characters don't parse
         # properly
-        node_label = '"%s%s(%s)%skernel size: %d%sstride: %d%spad: %d"' %\
+        node_label = '"%s%s(%s)%s%s: %d%s%s: %d%s%s: %d"' %\
                      (layer.name,
                       separator,
                       layer.type,
                       separator,
+                      node_text['kernel'],
                       layer.convolution_param.kernel_size[0] if len(layer.convolution_param.kernel_size._values) else 1,
                       separator,
+                      node_text['stride'],
                       layer.convolution_param.stride[0] if len(layer.convolution_param.stride._values) else 1,
                       separator,
+                      node_text['pad'],
                       layer.convolution_param.pad[0] if len(layer.convolution_param.pad._values) else 0)
     elif layer.type == 'Pooling':
         pooling_types_dict = get_pooling_types_dict()
-        node_label = '"%s%s(%s %s)%skernel size: %d%sstride: %d%spad: %d"' %\
+        node_label = '"%s%s(%s %s)%s%s: %d%s%s: %d%s%s: %d"' %\
                      (layer.name,
                       separator,
                       pooling_types_dict[layer.pooling_param.pool],
                       layer.type,
                       separator,
+                      node_text['kernel'],
                       layer.pooling_param.kernel_size,
                       separator,
+                      node_text['stride'],
                       layer.pooling_param.stride,
                       separator,
+                      node_text['pad'],
                       layer.pooling_param.pad)
     else:
         node_label = '"%s%s(%s)"' % (layer.name, separator, layer.type)
